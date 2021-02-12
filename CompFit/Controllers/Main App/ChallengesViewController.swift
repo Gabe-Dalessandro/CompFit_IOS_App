@@ -35,7 +35,7 @@ class ChallengesViewController: UIViewController {
         let title = UILabel()
         title.text = "Challenges"
         title.textAlignment = .center
-        title.textColor = .systemOrange
+        title.textColor = .systemRed
         title.font = .boldSystemFont(ofSize: 35)
         
         view.addSubview(title)
@@ -45,7 +45,6 @@ class ChallengesViewController: UIViewController {
         title.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 17).isActive = true
         title.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -17).isActive = true
         title.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
     }
     
 }

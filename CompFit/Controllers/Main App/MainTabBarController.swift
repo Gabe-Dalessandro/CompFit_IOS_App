@@ -35,7 +35,6 @@ class MainTabBarController: UITabBarController {
         view.backgroundColor = .white
         tabBar.barTintColor = .white
         tabBar.tintColor = UIColor(red: 255.0/255.0, green: 106.0/255.0, blue: 0.01, alpha: 1)
-//        addSignoutButton()
     }
     
     func addSignoutButton() {
