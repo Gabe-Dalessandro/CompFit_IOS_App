@@ -24,6 +24,7 @@ class MainTabBarController: UITabBarController {
     }
     
     
+    //loads the titles in the tab bar so it will be shown in load
     override func viewWillAppear(_ animated: Bool) {
         loadControllers()
     }
@@ -34,7 +35,6 @@ class MainTabBarController: UITabBarController {
         view.backgroundColor = .white
         tabBar.barTintColor = .white
         tabBar.tintColor = UIColor(red: 255.0/255.0, green: 106.0/255.0, blue: 0.01, alpha: 1)
-//        addSignoutButton()
     }
     
     func addSignoutButton() {
