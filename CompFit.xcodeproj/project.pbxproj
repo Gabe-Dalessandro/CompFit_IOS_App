@@ -13,6 +13,7 @@
 		0099471825BCF324007D4A99 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0099471725BCF324007D4A99 /* UserModel.swift */; };
 		00A0D5AA25D37CE300C6F561 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A0D5A925D37CE300C6F561 /* DashboardViewController.swift */; };
 		00AC7E7A25D3861F009755EA /* SocialFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AC7E7925D3861F009755EA /* SocialFeedViewController.swift */; };
+		00AE1F1325D642C700DD2561 /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AE1F1225D642C700DD2561 /* TestVC.swift */; };
 		00B6585C25D085BD000DC811 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B6585B25D085BC000DC811 /* Constants.swift */; };
 		00B6585F25D09979000DC811 /* UserDefaults_Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B6585E25D09978000DC811 /* UserDefaults_Helpers.swift */; };
 		00DB543025CDF3600068F7E7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DB542F25CDF3600068F7E7 /* MainTabBarController.swift */; };
@@ -39,6 +40,7 @@
 		0099471725BCF324007D4A99 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		00A0D5A925D37CE300C6F561 /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		00AC7E7925D3861F009755EA /* SocialFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialFeedViewController.swift; sourceTree = "<group>"; };
+		00AE1F1225D642C700DD2561 /* TestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		00B6585B25D085BC000DC811 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		00B6585E25D09978000DC811 /* UserDefaults_Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults_Helpers.swift; sourceTree = "<group>"; };
 		00DB542F25CDF3600068F7E7 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				00AC7E7925D3861F009755EA /* SocialFeedViewController.swift */,
 				0065E75125D3969F009A1A49 /* AddViewController.swift */,
 				0065E75725D397F3009A1A49 /* ProfileViewController.swift */,
+				00AE1F1225D642C700DD2561 /* TestVC.swift */,
 			);
 			path = "Main App";
 			sourceTree = "<group>";
@@ -231,6 +234,7 @@
 				00DB544025CDFEA30068F7E7 /* WelcomeViewController.swift in Sources */,
 				00DB544625CE1A010068F7E7 /* RegisterViewController.swift in Sources */,
 				00AC7E7A25D3861F009755EA /* SocialFeedViewController.swift in Sources */,
+				00AE1F1325D642C700DD2561 /* TestVC.swift in Sources */,
 				00B6585F25D09979000DC811 /* UserDefaults_Helpers.swift in Sources */,
 				0065E75825D397F3009A1A49 /* ProfileViewController.swift in Sources */,
 				00DB543325CDF3DA0068F7E7 /* MainNavigationController.swift in Sources */,
