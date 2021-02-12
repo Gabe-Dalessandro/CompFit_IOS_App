@@ -24,6 +24,7 @@ class MainTabBarController: UITabBarController {
     }
     
     
+    //loads the titles in the tab bar so it will be shown in load
     override func viewWillAppear(_ animated: Bool) {
         loadControllers()
     }
