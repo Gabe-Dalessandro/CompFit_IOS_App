@@ -31,7 +31,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else {
             let mainNavigationController = MainNavigationController()
             let welcomeViewController = WelcomeViewController()
-            mainNavigationController.navigationBar.barTintColor = .systemOrange
             mainNavigationController.viewControllers = [welcomeViewController]
 
             window?.rootViewController = mainNavigationController

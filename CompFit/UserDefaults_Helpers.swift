@@ -30,17 +30,10 @@ extension UserDefaults {
     }
     
     
-    func getCurrentUser() -> Any {
+    func getCurrentUser() -> UserModel {
         let byteBuffer = data(forKey: "currentUser")
-                
-        do {
-            let currentUser = try JSONDecoder().decode(UserModel.self, from: byteBuffer!)
-            return currentUser
-        } catch {
-            print("error in User Defaults")
-        }
-        
-        return "error in User Defaults"
+        let currentUser = try! JSONDecoder().decode(UserModel.self, from: byteBuffer!)
+        return currentUser
     }
     
 }
