@@ -19,7 +19,7 @@ class MainTabBarController: UITabBarController {
         let exploreVC = ExploreNavigationController()
         let profileVC = ProfileNavigationController()
         
-        self.viewControllers = [exploreVC, dashboardVC, profileVC, socialFeedVC, addVC]
+        self.viewControllers = [profileVC, exploreVC, dashboardVC, socialFeedVC, addVC]
     }
     
     

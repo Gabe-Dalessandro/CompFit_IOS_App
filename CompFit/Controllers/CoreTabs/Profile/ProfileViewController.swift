@@ -53,6 +53,7 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        configureProfileCollectionView()
         
     }
         
@@ -146,11 +147,11 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         collectionView.deselectItem(at: indexPath, animated: true)
         
         //get the model that was clicked and open the post view controller
-        print(indexPath.row)
-        print(indexPath)
-        let postModel = userPosts[indexPath.row]
-        let postVC = PostViewController(model: postModel)
-        self.navigationController?.pushViewController(postVC, animated: true)
+//        print(indexPath.row)
+//        print(indexPath)
+//        let postModel = userPosts[indexPath.row]
+//        let postVC = PostViewController(model: postModel)
+//        self.navigationController?.pushViewController(postVC, animated: true)
     }
     
     //Says what header we should use for our collection view
