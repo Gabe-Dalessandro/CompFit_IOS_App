@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import AWSS3
+import AWSCognito
+import AWSCore
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -22,13 +25,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.makeKeyAndVisible()
  
-        
+        // If user is logged in, take them to main app
         if UserDefaults.standard.isLoggedIn() {
             let mainTabBarController = MainTabBarController()
             mainTabBarController.viewControllers = []
 
             window?.rootViewController = mainTabBarController
-        } else {
+        }
+        // Else go to welcome screen
+        else {
             let mainNavigationController = MainNavigationController()
             let welcomeViewController = WelcomeViewController()
             mainNavigationController.viewControllers = [welcomeViewController]
@@ -65,7 +70,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
+    
+    
+    func initializeS3Scene() {
+        let poolId = "***** your poolId *****"
+        let credentialsProvider = AWSCognitoCredentialsProvider(
+            regionType: .USWest1, //other regionType according to your location.
+            identityPoolId: poolId
+        )
+        let configuration = AWSServiceConfiguration(region: .USWest1, credentialsProvider: credentialsProvider)
+        AWSServiceManager.default().defaultServiceConfiguration = configuration
+    }
+    
 
 }
 

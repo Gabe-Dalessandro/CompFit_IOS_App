@@ -45,6 +45,14 @@ class ProfileTabsCollectionReusableView: UICollectionReusableView {
     }()
     
     
+    
+    
+    
+    
+    
+    
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .orange
@@ -55,12 +63,27 @@ class ProfileTabsCollectionReusableView: UICollectionReusableView {
     }
     
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let buttonSize = self.frame.height - 10
+        let gridXPos = (self.frame.width/4)-(buttonSize/2)
+        gridButton.frame = CGRect(x: gridXPos, y: 5, width: buttonSize, height: buttonSize)
+        taggedButton.frame = CGRect(x: gridXPos + (self.frame.width/2), y: 5, width: buttonSize, height: buttonSize)
+    }
+    
+    
     //Will change the color of the buttons and display the user's posts
     @objc private func didTapGridButton(){
         gridButton.tintColor = .systemBlue
         taggedButton.tintColor = .lightGray
         delegate?.didTapGridButtonTab()
     }
+    
     
     //Will change the color of the buttons and display the user's tagged posts
     @objc private func didTapTaggedButton(){
@@ -69,16 +92,5 @@ class ProfileTabsCollectionReusableView: UICollectionReusableView {
         delegate?.didTapTaggedButtonTab()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let buttonSize = self.frame.height - 4
-        let gridXPos = ((self.frame.width/2)-buttonSize)/2
-        gridButton.frame = CGRect(x: gridXPos, y: 2, width: buttonSize, height: buttonSize)
-        taggedButton.frame = CGRect(x: gridXPos + (self.frame.width/2), y: 2, width: buttonSize, height: buttonSize)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 

@@ -21,7 +21,8 @@ class UserModel: Codable {
     var birthday: String?
     var totalPoints: Int?
     var userDesc: String?
-    var profilePicture: String?
+    var profilePicture: URL?
+    var profilePictureData: String?
 //    var profilePicture: URL
     var profilePictureImage: UIImage?
     
@@ -44,6 +45,7 @@ class UserModel: Codable {
         case totalPoints = "total_points"
         case userDesc = "user_description"
         case profilePicture = "profile_picture"
+        case profilePictureData = "profile_picture_data"
         
         //Foreign Keys
         case gender = "gender_desc"
@@ -132,7 +134,7 @@ class UserModel: Codable {
         } else {
             returnStr += String(self.totalPoints!) + "\n"
         }
-        returnStr += "Profile Picture: " + (self.profilePicture ?? "NA") + "\n"
+        returnStr += "Profile Picture: " + (self.profilePicture?.absoluteString ?? "NA") + "\n"
         
     
         //Foreign Keys

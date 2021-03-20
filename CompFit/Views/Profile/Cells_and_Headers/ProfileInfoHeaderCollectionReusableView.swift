@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import SDWebImage
 
 
 protocol ProfileInfoHeaderCollectionReusableViewDelegate: AnyObject {
+    //FOR TESTING
+    func profileHeaderDidTapProfileButton(_ header: ProfileInfoHeaderCollectionReusableView)
+    
     func profileHeaderDidTapPostsButton(_ header: ProfileInfoHeaderCollectionReusableView)
     func profileHeaderDidTapFollowersButton(_ header: ProfileInfoHeaderCollectionReusableView)
     func profileHeaderDidTapFollowingButton(_ header: ProfileInfoHeaderCollectionReusableView)
@@ -26,6 +30,13 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         imageView.backgroundColor = .red
         imageView.layer.masksToBounds = true
         return imageView
+    }()
+    
+    private let profileButton: UIButton = {
+        let button = UIButton()
+        button.layer.masksToBounds = true
+        button.setBackgroundImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+        return button
     }()
     
     private let postsButton: UIButton = {
@@ -58,7 +69,6 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "John Snow"
         label.backgroundColor = .cyan
         label.numberOfLines = 1
         return label
@@ -66,11 +76,25 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     
     private let bioLabel: UILabel = {
         let label = UILabel()
-        label.text = "This is the first account \n Happy to be here"
         label.backgroundColor = .purple
-        label.numberOfLines = 0 //0 will line wrap
+        label.numberOfLines = 0 // 0 will line wrap
         return label
     }()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -84,16 +108,6 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func addButtonActions(){
-        postsButton.addTarget(self, action: #selector(didTapPostsButton), for: .touchUpInside)
-        followersButton.addTarget(self, action: #selector(didTapFollowersButton), for: .touchUpInside)
-        followingButton.addTarget(self, action: #selector(didTapFollowingButton), for: .touchUpInside)
-        editProfileButton.addTarget(self, action: #selector(didTapEditProfileButton), for: .touchUpInside)
-    }
-    
-
-    
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -101,6 +115,14 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         let profilePhotoSize = self.frame.width/4.0
         profilePhotoImageView.frame = CGRect(x: 5, y: 5, width: profilePhotoSize, height: profilePhotoSize)
         profilePhotoImageView.layer.cornerRadius = profilePhotoSize/2.0
+        
+        // Profile Button
+        let profileButtonX = profilePhotoImageView.frame.maxX - 30
+        let profileButtonY = profilePhotoImageView.frame.maxY - 30
+        profileButton.frame = CGRect(x: profileButtonX, y: profileButtonY, width: 30, height: 30)
+        profileButton.layer.cornerRadius = 15/2
+        profileButton.backgroundColor = .white
+               
 
         //Posts, Following, and Followers
         let buttonHeight = profilePhotoSize/2.0
@@ -122,6 +144,15 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     }
     
     
+    private func addButtonActions(){
+        profileButton.addTarget(self, action: #selector(didTapProfileButton), for: .touchUpInside)
+        postsButton.addTarget(self, action: #selector(didTapPostsButton), for: .touchUpInside)
+        followersButton.addTarget(self, action: #selector(didTapFollowersButton), for: .touchUpInside)
+        followingButton.addTarget(self, action: #selector(didTapFollowingButton), for: .touchUpInside)
+        editProfileButton.addTarget(self, action: #selector(didTapEditProfileButton), for: .touchUpInside)
+    }
+    
+    
     private func addSubviews(){
         self.addSubview(profilePhotoImageView)
         self.addSubview(postsButton)
@@ -130,6 +161,23 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         self.addSubview(editProfileButton)
         self.addSubview(nameLabel)
         self.addSubview(bioLabel)
+        self.addSubview(profileButton)
+    }
+    
+    
+    func configure(with userModel: UserModel){
+        if userModel.profilePicture != nil {
+            // print( "Getting image for profile picture from AWS: \(String(describing: userModel.profilePicture?.absoluteString))" )
+            profilePhotoImageView.sd_setImage(with: userModel.profilePicture, completed: nil)
+        }
+        nameLabel.text = userModel.email
+        bioLabel.text = userModel.userDesc
+    }
+    
+    
+    // FOR TESTING
+    @objc private func didTapProfileButton() {
+        delegate?.profileHeaderDidTapProfileButton(self)
     }
     
     
@@ -137,13 +185,16 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         delegate?.profileHeaderDidTapPostsButton(self)
     }
     
+    
     @objc private func didTapFollowersButton() {
         delegate?.profileHeaderDidTapFollowersButton(self)
     }
     
+    
     @objc private func didTapFollowingButton() {
         delegate?.profileHeaderDidTapFollowingButton(self)
     }
+    
     
     @objc private func didTapEditProfileButton() {
         delegate?.profileHeaderDidTapEditProfileButton(self)

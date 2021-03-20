@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import AWSS3
+import AWSCognito
+import AWSCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+        self.initializeS3App()
         return true
     }
 
@@ -26,10 +29,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 
+    
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    }
+    
+    
+    func initializeS3App() {
+        let poolId = "***** your poolId *****"
+        let credentialsProvider = AWSCognitoCredentialsProvider(
+            regionType: .USWest1, //other regionType according to your location.
+            identityPoolId: poolId
+        )
+        let configuration = AWSServiceConfiguration(region: .USWest1, credentialsProvider: credentialsProvider)
+        AWSServiceManager.default().defaultServiceConfiguration = configuration
     }
 
 
