@@ -52,32 +52,8 @@ class AppleHealthView: UIView {
     @objc
     func syncPressed(sender : UIButton){
         sender.setTitle("Syncing ...", for: .normal)
-//        print("sync button was pressed")
     }
 
-    
-    
-    
-//    var submitButton: UIButton = {
-//        let button = UIButton()
-//        button.setTitle("Submit", for: .normal)
-//        button.backgroundColor = .systemOrange
-//        button.layer.cornerRadius = 15
-//        button.titleLabel?.font = .boldSystemFont(ofSize: 25)
-//        button.titleLabel?.textAlignment = .center
-//
-//        button.addTarget(self, action: #selector(submitPressed), for: .touchUpInside)
-//
-//        return button
-//    }()
-//
-//
-//    @objc
-//    func submitPressed(sender : UIButton){
-//        print("submit pressed")
-//    }
-    
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -87,7 +63,6 @@ class AppleHealthView: UIView {
         addSubview(viewTitle)
         addSubview(descLabel)
         addSubview(syncButton)
-//        addSubview(submitButton)
     }
 
     
@@ -105,7 +80,6 @@ class AppleHealthView: UIView {
         setViewTitle()
         setDescLabel()
         setSyncButton()
-//        setSubmitButton()
     }
     
     
@@ -130,16 +104,6 @@ class AppleHealthView: UIView {
         syncButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40).isActive = true
         syncButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
-    
-//    func setSubmitButton() {
-//        submitButton.translatesAutoresizingMaskIntoConstraints = false
-//        submitButton.topAnchor.constraint(equalTo: syncButton.bottomAnchor, constant: 260).isActive = true
-//        submitButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 17).isActive = true
-//        submitButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -17).isActive = true
-//        submitButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
-//    }
-//
-    
     
     
 }

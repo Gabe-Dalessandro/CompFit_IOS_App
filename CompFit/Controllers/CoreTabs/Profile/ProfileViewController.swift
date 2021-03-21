@@ -13,7 +13,7 @@ final class ProfileViewController: UIViewController {
 
     private var profileCollectionView: UICollectionView?
     private var userPosts = [UserPost]()
-    let userdata: UserModel
+    var userdata: UserModel
     
     
     
@@ -101,7 +101,8 @@ final class ProfileViewController: UIViewController {
 
     
     func didFinishEditing(){
-        profileCollectionView?.reloadData()
+        userdata = UserDefaults.standard.getCurrentUser()
+        profileCollectionView?.reloadSections(IndexSet(integer: 0))
     }
     
 }

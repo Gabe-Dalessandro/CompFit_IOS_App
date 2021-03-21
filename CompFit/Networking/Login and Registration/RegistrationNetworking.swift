@@ -11,11 +11,17 @@ extension Endpoint {
     static var register: Self {
         Endpoint(app: "user/", path: "register/")
     }
+    
+    static var getWorkoutTypes: Self {
+        Endpoint(app: "user/", path: "workout_type/get/")
+    }
+    
 }
 
 
 class RegisterNetworking {
     
+    // Creates a user object and then sends it to the backend
     static func registerNewUser(userData newUser: UserModel) {
         let myGroup = DispatchGroup()
         myGroup.enter()
@@ -58,8 +64,40 @@ class RegisterNetworking {
         }
         dataTask.resume()
         
-        
         myGroup.wait()
     }
     
+    
+    
+    
+    // Retrieves all of the workout types that are saved within the database
+    static func getWorkoutTypes() -> [String]{
+        var workoutTypes = [String]()
+        
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        
+        let endpoint = Endpoint.getWorkoutTypes
+        let task = URLSession.shared.dataTask(with: endpoint.url) { (data, response, error) in
+            if error != nil {
+                print("Error within: \(endpoint.url)")
+                print(error!)
+            }
+
+            if let safeData = data {
+                let results = try! JSONDecoder().decode([String].self, from: safeData)
+                workoutTypes = results
+                dispatchGroup.leave()
+            } else {
+                print("Error within: \(endpoint.url)")
+                print("\terror when grabbing data")
+                return
+            }
+        }
+        task.resume()
+        
+        
+        dispatchGroup.wait()
+        return workoutTypes
+    }
 }

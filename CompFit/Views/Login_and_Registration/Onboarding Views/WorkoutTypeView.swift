@@ -13,12 +13,8 @@ private var chosenWorkoutTypesSet: Set<String> = []
 
 class WorkoutTypeView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    var chosenWorkoutTypes: [String] = []
-    var workoutTypes: [String] = []
-    
-    public var urlStr = HTTPRequests.get_workout_types
-    
-    
+    var chosenWorkoutTypes: [String] = [String]()
+    var workoutTypes: [String] = [String]()
     
     var viewTitle: UILabel = {
         let textLabel = UILabel()
@@ -39,9 +35,7 @@ class WorkoutTypeView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         backgroundColor = .white
-        
         addSubview(viewTitle)
     }
     
@@ -52,56 +46,15 @@ class WorkoutTypeView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     
-    public func getWorkoutTypes() {
-        myGroup.enter()
-        let url = URL(string: urlStr)!
-        
-//        var session = URLSession(configuration: .default)
-        
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if error != nil {
-                print("Error within: \(self.urlStr)")
-                print(error!)
-            }
-
-            if let safeData = data {
-//                print("Printing the safeData:")
-//                print(safeData)
-
-                do {
-                    let result = try JSONDecoder().decode([String].self, from: safeData)
-//                    print("\nPrinting out data from server:")
-//                    print(result)
-                    self.workoutTypes = result
-                    self.myGroup.leave()
-                } catch {
-                    print("failed to convert \(error.localizedDescription)")
-                }
-
-            } else {
-                print("Error within: \(self.urlStr)")
-                print("\terror when grabbing data")
-                return
-            }
-        }
-        task.resume()
-    }
-
-    
-    //Used to retrieve data from the api: multithreading to allow us to get data first before displaying it
-        //populated the workoutTypes array within the class so we can make them into labels and display them
-    let myGroup = DispatchGroup()
-    
+   
     func setFrame(view: CGRect) {
         self.frame = view
-        
-        getWorkoutTypes()
+        self.setViewTitle()
 
-        myGroup.notify(queue: .main) {
-//            print("\nFinished the request")
-            self.setViewTitle()
-            self.createTypeLabels()
-        }
+        // Gets the workout types from the database
+        workoutTypes = RegisterNetworking.getWorkoutTypes()
+
+        self.createTypeLabels()
     }
     
     
@@ -120,11 +73,6 @@ class WorkoutTypeView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
-//        let height = self.frame.size.height
-//        let width = self.frame.width
-//        print("height: \(height)")
-//        print("width: \(width)\n")
-
         layout.itemSize = CGSize(width: 120, height: 45.0)
         layout.minimumLineSpacing = 15
         layout.minimumInteritemSpacing = 7
@@ -212,12 +160,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         typeLabel.isUserInteractionEnabled = true
         let typeTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(typeTapped))
         typeLabel.addGestureRecognizer(typeTapRecognizer)
-        
-//        var height = typeLabel.frame.height
-//        var width = typeLabel.frame.width
-//
-//        print("height: \(height)")
-//        print("width: \(width)\n")
+
     }
     
     
@@ -230,13 +173,10 @@ class CustomCollectionViewCell: UICollectionViewCell {
         let labelText = (tappedLabel.text)!
         
         if touchNumber % 2 != 0 {
-//            contentView.layer.borderWidth = 4
-//            contentView.layer.borderColor = CGColor(red: 255.0/255.0, green: 140.0/255.0, blue: 0, alpha: 1)
             contentView.backgroundColor = .systemOrange
             tappedLabel.textColor = .white
             chosenWorkoutTypesSet.insert(labelText)
         } else {
-//            contentView.layer.borderWidth = 0
             contentView.backgroundColor = .systemGray
             tappedLabel.textColor = .black
             chosenWorkoutTypesSet.remove(labelText)

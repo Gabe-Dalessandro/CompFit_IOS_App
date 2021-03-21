@@ -11,11 +11,16 @@ extension Endpoint {
     static func getPlaylists(withID id: Int) -> Self {
         Endpoint(app: "user_profile/", path: "workout_playlist/get/\(id)/")
     }
+    
+    static var updateProfilePicture: Self {
+        Endpoint(app: "user_profile/", path: "profile_picture/update/")
+    }
 }
 
 
+
 class ProfileNetworking {
-    
+
     static func getUsersWorkoutPlaylists() -> [PlaylistModel] {
         print("\n\n=== Retrieved Workout Playlists for User's Profile ===\n")
         let myGroup = DispatchGroup()
@@ -61,6 +66,54 @@ class ProfileNetworking {
         
         myGroup.wait()
         return retrievedPlaylists
+    }
+    
+    
+    
+    
+    static func changeProfilePicture(imageStr: String){
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        
+        
+        //update the current user on the app
+        let currentUser = UserDefaults.standard.getCurrentUser()
+        currentUser.profilePictureData = imageStr
+        
+        //Encode the data
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let jsonData = try! encoder.encode(currentUser)
+        
+        // Create the request
+        let endpoint = Endpoint.updateProfilePicture
+        var urlRequest: URLRequest = URLRequest(url: endpoint.url)
+        urlRequest.httpMethod = "POST"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpBody = jsonData
+        
+        // Send the request
+        let dataTask = URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
+            guard let validData = data else {
+                print("invalid data")
+                return
+            }
+            
+            do {
+                //show response as string
+                let updatedUser = try JSONDecoder().decode(UserModel.self, from: validData)
+                print("Step 2 of 2: Successfully saved profile picture in AWS S3\n\n")
+                UserDefaults.standard.setCurrentUser(updatedUser, writeToUserDefaults: true)
+                dispatchGroup.leave()
+            }
+            catch {
+                print("error")
+            }
+        })
+        dataTask.resume()
+        
+        
+        dispatchGroup.wait()
     }
     
 }
