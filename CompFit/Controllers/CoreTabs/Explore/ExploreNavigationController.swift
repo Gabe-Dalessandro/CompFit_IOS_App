@@ -12,10 +12,11 @@ class ExploreNavigationController: UINavigationController {
     
     init(){
         super.init(nibName: nil, bundle: nil)
-        self.title = "Explore"
-        self.tabBarItem.image = UIImage(named: "explore_icon")
+        self.title = "Discover"
+        self.tabBarItem.image = UIImage(named: "discover_icon")
         
-        let exploreVC = ExploreViewController()
+        let exploreVC = DiscoverViewController()
+        exploreVC.title = "Discover"
         self.pushViewController(exploreVC, animated: true)
     }
     
@@ -26,8 +27,6 @@ class ExploreNavigationController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationBar.barTintColor = Constants.deepOrange
-        view.backgroundColor = .red
     }
 
 }

@@ -8,97 +8,257 @@
 import UIKit
 
 
-class RegisterViewController: UIViewController {
+class SignUpViewController: UIViewController {
     
-    var emailView = RegistrationEmailView()
-    var passwordView = RegistrationPasswordView()
-    var phoneNumberView = RegistrationPhoneNumberView()
-    var registerButton = RegisterButton()
+    private let profilePictureImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = .label
+        imageView.image = UIImage(systemName: "person.circle")
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 45
+        return imageView
+    }()
 
-
+    private let usernameField: CustomTextField = {
+        let field = CustomTextField()
+        field.placeholder = "Username"
+        field.returnKeyType = .next
+        field.autocorrectionType = .no
+        return field
+    }()
+    
+    private let emailField: CustomTextField = {
+        let field = CustomTextField()
+        field.placeholder = "Email Address"
+        field.keyboardType = .emailAddress
+        field.returnKeyType = .next
+        field.autocorrectionType = .no
+        return field
+    }()
+    
+    private let passwordField: CustomTextField = {
+        let field = CustomTextField()
+        field.placeholder = "Create Password"
+        field.isSecureTextEntry = true
+        field.keyboardType = .default
+        field.returnKeyType = .continue
+        field.autocorrectionType = .no
+        return field
+    }()
+    
+    private let signUpButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Sign Up", for: .normal)
+        button.backgroundColor = Constants.Colors.brandDarkGrey
+        button.layer.cornerRadius = 8
+        button.layer.masksToBounds = true
+        button.titleLabel?.font = UIFont.poppinsRegular(size: 20)
+        button.setTitleColor(Constants.Colors.brandElectricGreen, for: .normal)
+        return button
+    }()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
+        title = "Create Account"
         
-        emailView.setEmailView(superview: view)
-        emailView.emailTextField.delegate = self
+        addSubviews()
         
-        passwordView.setPasswordView(superview: view, emailView: emailView)
-        passwordView.passwordTextField.delegate = self
+        usernameField.delegate = self
+        emailField.delegate = self
+        passwordField.delegate = self
         
-        phoneNumberView.setPhoneNumberView(superview: view, passwordView: passwordView)
-        phoneNumberView.phoneNumberTextField.delegate = self
+        signUpButton.addTarget(self, action: #selector(didTapSignUp), for: .touchUpInside)
+        addImageGesture()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        registerButton.setRegisterButton(superview: view)
-        registerButton.addTarget(self, action: #selector(registerPressed), for: .touchUpInside)
+        let imageSize: CGFloat = 90.0
+        profilePictureImageView.frame = CGRect(x: (view.width - imageSize)/2, y: view.safeAreaInsets.top+15, width: imageSize, height: imageSize)
+        
+        usernameField.frame = CGRect(x: 25, y: profilePictureImageView.bottom + 20, width: view.width - 50, height: 50)
+        
+        emailField.frame = CGRect(x: 25, y: usernameField.bottom + 10, width: view.width - 50, height: 50)
+        
+        passwordField.frame = CGRect(x: 25, y: emailField.bottom + 10, width: view.width - 50, height: 50)
+        
+        signUpButton.frame = CGRect(x: 25, y: passwordField.bottom + 20, width: view.width - 50, height: 50)
     }
     
     
-    @objc
-    func registerPressed(recognizer: UITapGestureRecognizer) {
+
+    private func addSubviews() {
+        view.addSubview(profilePictureImageView)
+        view.addSubview(usernameField)
+        view.addSubview(emailField)
+        view.addSubview(passwordField)
+        view.addSubview(signUpButton)
+    }
+    
+    
+    private func addImageGesture() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapImage))
+        profilePictureImageView.isUserInteractionEnabled = true
+        profilePictureImageView.addGestureRecognizer(tap)
+    }
+    
+    @objc private func didTapImage() {
+        let sheet = UIAlertController(title: "Profile Picture", message: "Set a picture to help everyone discover you", preferredStyle: .actionSheet)
         
-        if (emailView.emailTextField.text != "") && (passwordView.passwordTextField.text != "") && (phoneNumberView.phoneNumberTextField.text != "") {
+        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        sheet.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { [weak self] _ in
+            
+            DispatchQueue.main.async {
+                let pickerVC = UIImagePickerController()
+                pickerVC.sourceType = .camera
+                pickerVC.allowsEditing = true
+                pickerVC.delegate = self
+                self?.present(pickerVC, animated: true, completion: nil)
+            }
+        }))
+        
+        sheet.addAction(UIAlertAction(title: "Choose From Library", style: .default, handler: { [weak self] _ in
+            
+            DispatchQueue.main.async {
+                let pickerVC = UIImagePickerController()
+                pickerVC.allowsEditing = true
+                pickerVC.sourceType = .photoLibrary
+                pickerVC.delegate = self
+                self?.present(pickerVC, animated: true, completion: nil)
+            }
+            
+        }))
+        
+        
+        present(sheet, animated: true, completion: nil)
+    }
+    
+    @objc private func didTapSignUp() {
+        // Dismiss the keyboard
+        usernameField.resignFirstResponder()
+        emailField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+        
+        // Check if: fields aren't empty,they aren't just filled with whitespaces,
+            // username doesn't contain symbols, and check proper password strength
+        guard let username = usernameField.text, let email = emailField.text, let password = passwordField.text,
+              !username.trimmingCharacters(in: .whitespaces).isEmpty,
+              username.trimmingCharacters(in: .alphanumerics).isEmpty,
+              !email.trimmingCharacters(in: .whitespaces).isEmpty,
+              !password.trimmingCharacters(in: .whitespaces).isEmpty,
+              password.count >= 8
+        else {
+            presentError(errorMessage: "Field was left blank")
+            return
+        }
+        
+        // Register new user
+        let newUser = UserModel(email: email, password: password)
+        let errorMessage = RegisterNetworking.registerNewUser2(userData: newUser)
+   
+        if (errorMessage == "") {
             transitionToOnboarding()
         } else {
-            print("one of the fields were left blank")
+            presentError(errorMessage: errorMessage)
+            return
         }
     }
-
-
     
-    func transitionToOnboarding() {
-//        let email = "jsnow@gmail.com"
-//        let password = "fitness123"
-//        let phoneNumber = "5703325722"
+    
+    // Present the errors as an alert
+    private func presentError(errorMessage: String) {
+        let alert = UIAlertController(title: "Unsuccessful Sign Up", message: errorMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
+    private func transitionToMainApp() {
+        let mainTabBarController = MainTabBarController()
+        mainTabBarController.viewControllers = []
+        mainTabBarController.modalPresentationStyle = .fullScreen
+        mainTabBarController.isModalInPresentation = false
+
+        present(mainTabBarController, animated: true, completion: nil)
+    }
+    
+    
+    private func transitionToOnboarding() {
 
         let onboardingViewController = OnboardingViewController()
         onboardingViewController.modalPresentationStyle = .fullScreen
-        onboardingViewController.emailStr = emailView.emailTextField.text!
-        onboardingViewController.passwordStr = passwordView.passwordTextField.text!
-        onboardingViewController.phoneNumberStr = phoneNumberView.phoneNumberTextField.text!
+        onboardingViewController.emailStr = emailField.text!
+        onboardingViewController.passwordStr = passwordField.text!
+        onboardingViewController.phoneNumberStr = "5703325722"
 
         self.navigationController?.pushViewController(onboardingViewController, animated: true)
     }
-}
- 
     
-   
-
-extension RegisterViewController: UITextFieldDelegate {
-
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        //dismissed if something was typed
-        if (textField.text != "") {
-            return true
-        }
-        //will stay if user didn't type anything yet
-        else {
-            if(emailView.emailTextField.isEditing) {
-                textField.placeholder = "Enter email!"
-            } else if (passwordView.passwordTextField.isEditing) {
-                textField.placeholder = "Enter password!"
-            } else if (phoneNumberView.phoneNumberTextField.isEditing) {
-                textField.placeholder = "Enter phone number!"
-            }
-
-            return false;
-        }
-    }
+}
 
 
 
+
+
+
+
+extension SignUpViewController: UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if(emailView.emailTextField.isEditing) {
-            emailView.emailTextField.endEditing(true)
-            return true
-        } else if (passwordView.passwordTextField.isEditing) {
-            passwordView.passwordTextField.endEditing(true)
-            return true
-        } else if (phoneNumberView.phoneNumberTextField.isEditing) {
-            phoneNumberView.phoneNumberTextField.endEditing(true)
-            return true
+        if (textField == usernameField) {
+            emailField.becomeFirstResponder()
         }
-
-        return true;
+        else if (textField == emailField) {
+            passwordField.becomeFirstResponder()
+        }
+        else if (textField == passwordField){
+            textField.resignFirstResponder()
+            didTapSignUp()
+        }
+        
+        return true
     }
 }
+
+
+
+// Used to choose a profile picture for the account
+extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
+            return
+        }
+        
+        profilePictureImageView.image = image
+    }
+}
+
+
+
+
+
+

@@ -25,12 +25,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.makeKeyAndVisible()
  
-        // If user is logged in, take them to main app
+        // If user is logged in and has completed the onboarding: direct them to main app
         if UserDefaults.standard.isLoggedIn() {
-            let mainTabBarController = MainTabBarController()
-            mainTabBarController.viewControllers = []
+            // If the user has completed the onboarding
+//            if UserDefaults.standard.hasCompletedOnboarding() {
+                let mainTabBarController = MainTabBarController()
+                mainTabBarController.viewControllers = []
 
-            window?.rootViewController = mainTabBarController
+                window?.rootViewController = mainTabBarController
+//            }
+//            else {
+//                let mainNavigationController = MainNavigationController()
+//
+//                let onboardingVC = OnboardingViewController()
+//                onboardingVC.emailStr = Constants.currentUser.email!
+//                onboardingVC.passwordStr = Constants.currentUser.password ?? "NA"
+//                onboardingVC.phoneNumberStr = "5703325722"
+//                mainNavigationController.viewControllers = [onboardingVC]
+//
+//                window?.rootViewController = mainNavigationController
+//            }
         }
         // Else go to welcome screen
         else {

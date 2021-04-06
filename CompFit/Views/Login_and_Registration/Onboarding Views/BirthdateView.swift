@@ -73,7 +73,7 @@ class BirthdateView: UIView, UITextFieldDelegate {
         
         birthdateTextField.text = formatter.string(from: datePicker.date)
         birthdateStr = (birthdateTextField.text)!
-        birthdateTextField.textColor = .systemOrange
+        birthdateTextField.textColor = .black
         birthdateTextField.font = .boldSystemFont(ofSize: 30)
         birthdateTextField.endEditing(true)
     }

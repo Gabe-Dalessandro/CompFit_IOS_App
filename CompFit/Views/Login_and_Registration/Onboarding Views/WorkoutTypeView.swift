@@ -173,7 +173,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         let labelText = (tappedLabel.text)!
         
         if touchNumber % 2 != 0 {
-            contentView.backgroundColor = .systemOrange
+            contentView.backgroundColor = Constants.Colors.brandBlue
             tappedLabel.textColor = .white
             chosenWorkoutTypesSet.insert(labelText)
         } else {

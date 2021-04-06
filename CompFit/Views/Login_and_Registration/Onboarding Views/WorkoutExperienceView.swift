@@ -144,7 +144,7 @@ class WorkoutExperienceView: UIView {
             if label!.text == text {
                 views[i].layer.masksToBounds = true
                 views[i].layer.borderWidth = 5
-                views[i].layer.borderColor = UIColor.orange.cgColor
+                views[i].layer.borderColor = Constants.Colors.brandPink.cgColor
             }
             else {
                 views[i].layer.masksToBounds = false

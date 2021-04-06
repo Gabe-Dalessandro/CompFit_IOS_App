@@ -7,15 +7,65 @@
 
 import UIKit
 
+class LoginHeaderView: UIView {
+    
+    private var gradientLayer: CAGradientLayer?
+    
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "logo-horizontal")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    
+    
+    
+    
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        clipsToBounds = true
+        createGradient()
+        
+        addSubview(imageView)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func createGradient(){
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [Constants.Colors.brandBlue.cgColor, Constants.Colors.brandPink.cgColor]
+        layer.addSublayer(gradientLayer)
+        self.gradientLayer = gradientLayer
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer?.frame = layer.bounds
+        
+        imageView.frame = CGRect(x: width/4, y: 20, width: width/2, height: height - 40)
+    }
+    
+    
+}
+
 
 class LoginEmailView: UIView {
     
     var emailTextField = UITextField()
     var emailImageView = UIImageView(image: UIImage(named: "textfield"))
     
-    init() {
+    override init(frame: CGRect) {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     }
+    
+//    init() {
+//        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+//    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -126,7 +176,7 @@ class LoginButton: UIButton {
     
     func setLoginButton(superview: UIView) {
         superview.addSubview(self)
-        self.backgroundColor = Constants.deepOrange
+        self.backgroundColor = Constants.Colors.brandPink
         self.setTitleColor(.systemTeal, for: .normal)
         self.setTitle("Login", for: .normal)
         self.titleLabel?.font = .boldSystemFont(ofSize: 30)

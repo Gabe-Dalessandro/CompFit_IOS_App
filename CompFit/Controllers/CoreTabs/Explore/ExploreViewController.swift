@@ -45,6 +45,9 @@ class ExploreViewController: UIViewController {
     
     
     
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -117,9 +120,6 @@ class ExploreViewController: UIViewController {
         // Add the collection view to the main view
         view.addSubview(collectionView!)
     }
-    
-    
-
 }
 
 

@@ -28,7 +28,7 @@ class ProfileTabsCollectionReusableView: UICollectionReusableView {
     private let gridButton: UIButton = {
         let button = UIButton()
         button.clipsToBounds = true
-        button.tintColor = .systemBlue
+        button.tintColor = Constants.Colors.brandPink
         button.setBackgroundImage(UIImage(systemName: "square.grid.2x2"), for: .normal)
         
         return button
@@ -55,7 +55,7 @@ class ProfileTabsCollectionReusableView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .orange
+        self.backgroundColor = Constants.Colors.brandBlue
         self.addSubview(gridButton)
         self.addSubview(taggedButton)
         gridButton.addTarget(self, action: #selector(didTapGridButton), for: .touchUpInside)
@@ -79,7 +79,7 @@ class ProfileTabsCollectionReusableView: UICollectionReusableView {
     
     //Will change the color of the buttons and display the user's posts
     @objc private func didTapGridButton(){
-        gridButton.tintColor = .systemBlue
+        gridButton.tintColor = Constants.Colors.brandPink
         taggedButton.tintColor = .lightGray
         delegate?.didTapGridButtonTab()
     }
@@ -88,7 +88,7 @@ class ProfileTabsCollectionReusableView: UICollectionReusableView {
     //Will change the color of the buttons and display the user's tagged posts
     @objc private func didTapTaggedButton(){
         gridButton.tintColor = .lightGray
-        taggedButton.tintColor = .systemBlue
+        taggedButton.tintColor = Constants.Colors.brandPink
         delegate?.didTapTaggedButtonTab()
     }
     

@@ -35,10 +35,11 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate {
     func addChooseFromLibraryButton() {
         let button = UIButton()
         button.setTitle("Choose From Library", for: .normal)
-        button.backgroundColor = Constants.deepOrange
+        button.backgroundColor = Constants.Colors.brandDarkGrey
         button.layer.cornerRadius = 15
         button.titleLabel?.font = .boldSystemFont(ofSize: 25)
         button.titleLabel?.textAlignment = .center
+        button.tintColor = .white
         
         button.addTarget(self, action: #selector(chooseFromLibrary), for: .touchUpInside)
         
@@ -55,10 +56,11 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate {
     func addUseCameraButton() {
         let button = UIButton()
         button.setTitle("Use Camera", for: .normal)
-        button.backgroundColor = Constants.deepOrange
+        button.backgroundColor = Constants.Colors.brandDarkGrey
         button.layer.cornerRadius = 15
         button.titleLabel?.font = .boldSystemFont(ofSize: 25)
         button.titleLabel?.textAlignment = .center
+        button.tintColor = .white
         
         button.addTarget(self, action: #selector(useCamera), for: .touchUpInside)
         

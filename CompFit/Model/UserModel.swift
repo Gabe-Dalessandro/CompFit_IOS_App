@@ -7,9 +7,6 @@
 
 import UIKit
 
-fileprivate let get_profilepicture_from_server: URL = URL(string: HTTPRequests.get_current_profile_picture)!
-
-
 
 class UserModel: Codable {
     var id: Int? = 0
@@ -69,6 +66,21 @@ class UserModel: Codable {
         self.workoutIntensity = workoutIntensity
         self.workoutTypes = workoutTypes
     }
+    
+    init(id: Int?, email: String?, password: String?, phoneNumber: String?, birthday: String?, totalPoints: Int?, gender: String?, fitnessExp: String?, workoutIntensity: String?, workoutTypes: [String]? ) {
+        self.id = id
+        self.email = email
+        self.password = password
+        self.phoneNumber = phoneNumber
+        self.birthday = birthday
+        self.totalPoints = totalPoints
+        self.userDesc = ""
+        //Foreign Keys
+        self.gender = gender
+        self.fitnessExp = fitnessExp
+        self.workoutIntensity = workoutIntensity
+        self.workoutTypes = workoutTypes
+    }
 
     
     init(email: String?, password: String?) {
@@ -77,40 +89,7 @@ class UserModel: Codable {
     }
     
     
-    
-    func getProfilePictureFromServer() {
-        //Construct the url for the api request
-        var urlRequest = URLRequest(url: get_profilepicture_from_server)
-        let encoder = JSONEncoder()
-        let jsonData = try! encoder.encode(UserDefaults.standard.getCurrentUser())
         
-        // Construct the request
-        urlRequest.httpMethod = "GET"
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.httpBody = jsonData
-
-        //Create a URL Session
-        let session = URLSession.shared.dataTask(with: urlRequest) {
-            (data, response, error) in
-            if (error != nil) {
-                print("\n=== Error in GET PROFILE PICTURE request ===")
-                print(error!)
-            } else {
-//                let responseData = try! JSONDecoder().decode(Data.self, from: data)
-//                print("\nResponse data: \(responseData)")
-                print(data)
-//                var currentUser = UserDefaults.standard.getCurrentUser()
-                self.profilePictureImage = UIImage(data: data!)
-                UserDefaults.standard.setCurrentUser(self)
-//                    currentUser.profilePictureData = UIImage(data: responseData)
-//                    UserDefaults.standard.setCurrentUser(currentUser, writeToUserDefaults: true)
-                print("\n\n=== Successfully recieved the Profile Picture ===")
-            }
-        }
-        session.resume()
-    }
-    
-    
     
     func printUserModel() {
         var returnStr = "\n--- User Model Data ---\n"
@@ -129,7 +108,7 @@ class UserModel: Codable {
         returnStr += "Phone Number: " + (self.phoneNumber ?? "NA") + "\n"
         returnStr += "Birthday: " + (self.birthday ?? "NA") + "\n"
         returnStr += "Total Points: "
-        if self.id == nil {
+        if self.totalPoints == nil {
             returnStr += "NA\n"
         } else {
             returnStr += String(self.totalPoints!) + "\n"

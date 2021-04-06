@@ -200,7 +200,7 @@ class RegisterButton: UIButton {
     
     func setRegisterButton(superview: UIView) {
         superview.addSubview(self)
-        self.backgroundColor = Constants.deepOrange
+        self.backgroundColor = Constants.Colors.brandPink
         self.setTitleColor(.systemTeal, for: .normal)
         self.setTitle("Register", for: .normal)
         self.titleLabel?.font = .boldSystemFont(ofSize: 30)

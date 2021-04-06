@@ -19,7 +19,7 @@ class MainTabBarController: UITabBarController {
         let exploreVC = ExploreNavigationController()
         let profileVC = ProfileNavigationController()
         
-        self.viewControllers = [profileVC, exploreVC, dashboardVC, socialFeedVC, addVC]
+        self.viewControllers = [dashboardVC, addVC, exploreVC, profileVC, socialFeedVC]
     }
     
     
@@ -33,7 +33,8 @@ class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         view.backgroundColor = .white
         tabBar.barTintColor = .white
-        tabBar.tintColor = UIColor(red: 255.0/255.0, green: 106.0/255.0, blue: 0.01, alpha: 1)
+        tabBar.tintColor = Constants.Colors.brandPink
+        
     }
 
 }

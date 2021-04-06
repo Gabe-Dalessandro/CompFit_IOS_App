@@ -49,12 +49,24 @@ class NotificationFollowEventTableViewCell: UITableViewCell {
         return button
     }()
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.clipsToBounds = true
+        
         contentView.addSubview(profileImageView)
         contentView.addSubview(label)
         contentView.addSubview(followButton)
+        
         followButton.addTarget(self, action: #selector(didTapFollowButton), for: .touchUpInside)
         
         configureForFollow()

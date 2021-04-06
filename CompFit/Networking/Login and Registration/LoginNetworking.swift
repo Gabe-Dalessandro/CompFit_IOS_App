@@ -16,11 +16,12 @@ extension Endpoint {
 
 class LoginNetworking {
     
-    static func loginUser(_ email: String, _ password: String) -> Bool{
+    // Successful login will mean no error was returned and the string will be empty ""
+    static func loginUser(_ email: String, _ password: String) -> String {
         let myGroup = DispatchGroup()
         myGroup.enter()
 
-        var successfulLogin = false
+        var successfulLogin = ""
 
         // Create the user and convert it JSON
         let user = UserModel(email: email, password: password)
@@ -57,25 +58,19 @@ class LoginNetworking {
 
                     print("\n\n=== Login Successful! ===")
                     loggedInUser.printUserModel()
-                    successfulLogin = true
+                    successfulLogin = ""
                     myGroup.leave()
                 } catch {
-                    print("\n\n=== Error in LOGIN request 'user/login' ===")
-                    successfulLogin = false
+                    let loginError = try! JSONDecoder().decode(String.self, from: validData)
+                    
+                    print("\n\nError in LOGIN request: \(loginError)")
+                    successfulLogin = loginError
                     myGroup.leave()
                 }
             }
         }
         
         session.resume()
-
-//        myGroup.notify(queue: .main) {
-//            if successfulLogin {
-//
-//            } else {
-//                print("Error logging in")
-//            }
-//        }
 
         myGroup.wait()
         return successfulLogin

@@ -33,6 +33,20 @@ class FeedViewController: UIViewController {
     }()
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     init(){
         super.init(nibName: nil, bundle: nil)
         self.title = "Feed"
@@ -56,6 +70,11 @@ class FeedViewController: UIViewController {
         createMockPosts()
     }
     
+    
+    override func viewDidLayoutSubviews(){
+        super.viewDidLayoutSubviews()
+        feedTableView.frame = view.bounds
+    }
     
     
     private func createMockPosts() {
@@ -92,7 +111,7 @@ class FeedViewController: UIViewController {
         }
 
         
-        for x in 0..<5 {
+        for _ in 0..<5 {
             let header = PostRenderViewModel(renderType: .header(provider: user))
             let content = PostRenderViewModel(renderType: .primaryContent(provider: post))
             let actions = PostRenderViewModel(renderType: .actions(provider: ""))
@@ -105,31 +124,7 @@ class FeedViewController: UIViewController {
             feedRenderModels.append(viewModel)
         }
     }
-    
-    
-    override func viewDidLayoutSubviews(){
-        super.viewDidLayoutSubviews()
-        feedTableView.frame = view.bounds
-    }
-    
-    
-    func addTitle() {
-        let title = UILabel()
-        title.text = "Feed"
-        title.textAlignment = .center
-        title.textColor = .systemRed
-        title.font = .boldSystemFont(ofSize: 35)
         
-        view.addSubview(title)
-        
-        title.translatesAutoresizingMaskIntoConstraints = false
-        title.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 200).isActive = true
-        title.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 17).isActive = true
-        title.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -17).isActive = true
-        title.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
-    }
-    
 }
 
 
@@ -147,12 +142,12 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let postModel: FeedRenderViewModel
         
-        //if we are going to display the first model
+        // if we are going to display the first model
         if section == 0 {
             postModel = feedRenderModels[0]
             
         } else {
-            //Logic to find which model we are currently at
+            // Logic to find which model we are currently at
             let position = section % numSectionsInFeedModel == 0 ? section/numSectionsInFeedModel: ((section - (section%numSectionsInFeedModel)) / numSectionsInFeedModel)
             postModel = feedRenderModels[position]
         }
@@ -292,6 +287,7 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
     }
+    
     //Sets the size after every post section (which is after the comments which is in index 3 of each post)
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let subSection = section % numSectionsInFeedModel

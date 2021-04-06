@@ -10,7 +10,7 @@ import UIKit
 class WelcomeViewController: UIViewController {
 
     private func addLogo() {
-        let logo = UIImage(named: "logo")
+        let logo = UIImage(named: "logo-vertical")
         let imageView = UIImageView(image: logo)
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
@@ -27,10 +27,10 @@ class WelcomeViewController: UIViewController {
     
     private func addRegisterButton() {
         let registerButton = UIButton()
-        registerButton.backgroundColor = .systemGray
-        registerButton.setTitleColor(Constants.deepOrange, for: .normal)
+        registerButton.backgroundColor = Constants.Colors.brandDarkGrey
+        registerButton.setTitleColor(.white, for: .normal)
         registerButton.setTitle("Register", for: .normal)
-        registerButton.titleLabel?.font = .boldSystemFont(ofSize: 30)
+        registerButton.titleLabel?.font = UIFont.poppinsMedium(size: 30)
         
         self.view.addSubview(registerButton)
         
@@ -45,17 +45,17 @@ class WelcomeViewController: UIViewController {
     
     @objc
     func registerPressed(recognizer: UITapGestureRecognizer) {
-        let registerViewController = RegisterViewController()
+        let registerViewController = SignUpViewController()
         self.navigationController?.pushViewController(registerViewController, animated: true)
     }
     
     
     private func addLoginButton() {
         let loginButton = UIButton()
-        loginButton.backgroundColor = Constants.deepOrange
+        loginButton.backgroundColor = Constants.Colors.brandBlue
         loginButton.setTitleColor(.white, for: .normal)
         loginButton.setTitle("Login", for: .normal)
-        loginButton.titleLabel?.font = .boldSystemFont(ofSize: 30)
+        loginButton.titleLabel?.font = UIFont.poppinsMedium(size: 30)
         
         self.view.addSubview(loginButton)
         
@@ -82,7 +82,6 @@ class WelcomeViewController: UIViewController {
         addLogo()
         addRegisterButton()
         addLoginButton()
-        // Do any additional setup after loading the view.
     }
 
 

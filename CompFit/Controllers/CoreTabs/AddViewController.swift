@@ -11,6 +11,7 @@ import UIKit
 //This is the navigation pane at the bottom of the app screen
 class AddViewController: UIViewController {
     
+
     
     init(){
         super.init(nibName: nil, bundle: nil)
@@ -22,13 +23,17 @@ class AddViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        
+        
         addTitle()
     }
+    
+    
+  
     
     
     func addTitle() {
@@ -45,7 +50,6 @@ class AddViewController: UIViewController {
         title.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 17).isActive = true
         title.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -17).isActive = true
         title.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
     }
 }
 

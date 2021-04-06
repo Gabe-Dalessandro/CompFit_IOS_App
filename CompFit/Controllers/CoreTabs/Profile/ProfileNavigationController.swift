@@ -27,7 +27,7 @@ class ProfileNavigationController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationBar.barTintColor = Constants.deepOrange
+        self.navigationBar.barTintColor = Constants.Colors.brandBlue
         view.backgroundColor = .red
     }
 }

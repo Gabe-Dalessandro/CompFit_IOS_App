@@ -11,14 +11,24 @@ extension UserDefaults {
     
     func setIsLoggedIn(value: Bool) {
         set(value, forKey: "isLoggedIn")
+        if value == false {
+            UserDefaults.standard.removeObject(forKey: "currentUser")
+        }
         synchronize()
     }
     
+    func setHasCompletedOnboarding(value: Bool) {
+        set(value, forKey: "hasCompletedOnboarding")
+        synchronize()
+    }
     
     func isLoggedIn() -> Bool {
         return bool(forKey: "isLoggedIn")
     }
     
+    func hasCompletedOnboarding() -> Bool {
+        return bool(forKey: "hasCompletedOnboarding")
+    }
     
     func setCurrentUser(_ user: UserModel, writeToUserDefaults: Bool = false) {
         if writeToUserDefaults == true {

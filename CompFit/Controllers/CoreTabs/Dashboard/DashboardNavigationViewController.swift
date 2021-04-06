@@ -28,7 +28,7 @@ class DashboardNavigationController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationBar.barTintColor = Constants.deepOrange
-        view.backgroundColor = .red
+        self.navigationBar.barTintColor = .white
+
     }
 }

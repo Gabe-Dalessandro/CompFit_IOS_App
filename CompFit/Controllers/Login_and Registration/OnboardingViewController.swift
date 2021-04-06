@@ -75,7 +75,7 @@ class OnboardingViewController: UIViewController {
         let pageControl = UIPageControl()
         pageControl.numberOfPages = onboardingViews.count
         pageControl.currentPage = 0
-        pageControl.currentPageIndicatorTintColor = Constants.deepOrange
+        pageControl.currentPageIndicatorTintColor = Constants.Colors.brandBlue
         pageControl.pageIndicatorTintColor = .systemGray
         //pageControl.preferredIndicatorImage = UIImage() //use this to have a custom image for the dot
                 
@@ -104,7 +104,7 @@ class OnboardingViewController: UIViewController {
         let button = UIButton(type: .system)
         
         button.setTitle("NEXT", for: .normal)
-        button.setTitleColor(Constants.deepOrange, for: .normal)
+        button.setTitleColor(Constants.Colors.brandPink, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
         
@@ -118,12 +118,12 @@ class OnboardingViewController: UIViewController {
     var submitButton: UIButton = {
         let button = UIButton()
         button.setTitle("Submit", for: .normal)
-        button.backgroundColor = Constants.deepOrange
+        button.backgroundColor = Constants.Colors.brandBlue
         button.layer.cornerRadius = 15
         button.titleLabel?.font = .boldSystemFont(ofSize: 25)
         button.titleLabel?.textAlignment = .center
         
-        button.addTarget(self, action: #selector(submitPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapFinish), for: .touchUpInside)
         
         return button
     }()
@@ -244,13 +244,13 @@ class OnboardingViewController: UIViewController {
     
     
     
-    @objc func submitPressed(sender : UIButton) {
-//        var birthdate = view0.birthdateStr
-//        var gender = view1.chosenGenderStr
-//        var experience = view2.experienceStr
-//        var workoutTypes = view3.getChosenWorkoutTypes()
-//        var intensity = view4.intensityStr
-//        var appleHealth = view5.appleHealthStr
+    @objc func didTapFinish(sender : UIButton) {
+//        let birthdate = view0.birthdateStr
+//        let gender = view1.chosenGenderStr
+//        let experience = view2.experienceStr
+        let workoutTypes = view3.getChosenWorkoutTypes()
+//        let intensity = view4.intensityStr
+//        let appleHealth = view5.appleHealthStr
         
         let email = emailStr
         let password = passwordStr
@@ -259,11 +259,12 @@ class OnboardingViewController: UIViewController {
         let totalPoints = 0
         let gender = "Male"
         let experience = "Beginner"
-        let workoutTypes = ["HIIT", "Yoga", "Plyometrics"]
+//        let workoutTypes = ["HIIT", "Yoga", "Plyometrics"]
         let intensity = "High"
 //        let appleHealth = "TBD"
         
-        let newUser = UserModel(email: email, password: password,
+        let updatedUser = UserModel(id: Constants.currentUser.id,
+                                    email: email, password: password,
                            phoneNumber: phoneNumber, birthday: birthday,
                            totalPoints: totalPoints, gender: gender,
                            fitnessExp: experience, workoutIntensity: intensity,
@@ -271,7 +272,7 @@ class OnboardingViewController: UIViewController {
         
         
         if ( (email != "") && (password != "") && (phoneNumber != "") && (birthday != "") && (gender != "") && (experience != "") && (intensity != "") ) {
-            RegisterNetworking.registerNewUser(userData: newUser)
+            RegisterNetworking.onboardUser(userData: updatedUser)
             transitionToMainApp()
         }
     }

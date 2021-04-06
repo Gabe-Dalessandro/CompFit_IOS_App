@@ -20,7 +20,6 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
     
     let userdata = Constants.currentUser
     let userProfilePicture: UIImageView
-    let updateProfilePictureURL: URL = URL(string: HTTPRequests.update_profile_picture)!
     
     let editTableView: UITableView = {
         let tableView = UITableView()

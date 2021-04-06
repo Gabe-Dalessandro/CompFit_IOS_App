@@ -29,57 +29,65 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         let imageView = UIImageView()
         imageView.backgroundColor = .red
         imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
     private let profileButton: UIButton = {
         let button = UIButton()
         button.layer.masksToBounds = true
+        button.contentMode = .scaleAspectFit
         button.setBackgroundImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+        button.backgroundColor = .white
+        button.layer.borderWidth = 0
         return button
     }()
     
     private let postsButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .orange
+        button.backgroundColor = Constants.Colors.brandPink
         button.setTitle("Posts", for: .normal)
-        return button
-    }()
-    
-    private let followingButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .red
-        button.setTitle("Following", for: .normal)
         return button
     }()
     
     private let followersButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .blue
+        button.backgroundColor = Constants.Colors.brandDarkGrey
         button.setTitle("Followers", for: .normal)
+        return button
+    }()
+    
+    private let followingButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = Constants.Colors.brandPink
+        button.setTitle("Following", for: .normal)
         return button
     }()
     
     private let editProfileButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .red
+        button.backgroundColor = Constants.Colors.brandLightGrey
         button.setTitle("Edit Profile", for: .normal)
         return button
     }()
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .cyan
+//        label.backgroundColor = .cyan
         label.numberOfLines = 1
         return label
     }()
     
     private let bioLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .purple
+//        label.backgroundColor = .purple
         label.numberOfLines = 0 // 0 will line wrap
         return label
     }()
+    
+    
+    
+    
     
     
     
@@ -120,19 +128,18 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         let profileButtonX = profilePhotoImageView.frame.maxX - 30
         let profileButtonY = profilePhotoImageView.frame.maxY - 30
         profileButton.frame = CGRect(x: profileButtonX, y: profileButtonY, width: 30, height: 30)
-        profileButton.layer.cornerRadius = 15/2
-        profileButton.backgroundColor = .white
+        profileButton.layer.cornerRadius = 15
                
 
         //Posts, Following, and Followers
         let buttonHeight = profilePhotoSize/2.0
         let buttonWidth = (self.frame.width - profilePhotoSize - 10)/3
-        postsButton.frame = CGRect(x: profilePhotoImageView.frame.maxX, y: 5, width: buttonWidth, height: buttonHeight)
+        postsButton.frame = CGRect(x: profilePhotoImageView.frame.maxX+2, y: 5, width: buttonWidth, height: buttonHeight)
         followersButton.frame = CGRect(x: postsButton.frame.maxX, y: 5, width: buttonWidth, height: buttonHeight)
         followingButton.frame = CGRect(x: followersButton.frame.maxX, y: 5, width: buttonWidth, height: buttonHeight)
         
         //Edit Profile Button
-        editProfileButton.frame = CGRect(x: profilePhotoImageView.frame.maxX, y: 5+buttonHeight, width: (buttonWidth * 3), height: buttonHeight)
+        editProfileButton.frame = CGRect(x: profilePhotoImageView.frame.maxX+2, y: 5+buttonHeight, width: (buttonWidth * 3), height: buttonHeight)
         
         
         //Labels

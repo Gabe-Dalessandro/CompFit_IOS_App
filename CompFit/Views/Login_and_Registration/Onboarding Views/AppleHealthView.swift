@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import HealthKit
 
 class AppleHealthView: UIView {
     
@@ -38,7 +39,7 @@ class AppleHealthView: UIView {
     var syncButton: UIButton = {
         let button = UIButton()
         button.setTitle("Sync with Apple Health", for: .normal)
-        button.backgroundColor = Constants.deepOrange
+        button.backgroundColor = Constants.Colors.brandBlue
         button.layer.cornerRadius = 15
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.titleLabel?.textAlignment = .center
@@ -52,6 +53,16 @@ class AppleHealthView: UIView {
     @objc
     func syncPressed(sender : UIButton){
         sender.setTitle("Syncing ...", for: .normal)
+        let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
+        
+        healthStore?.requestAuthorization(toShare: [stepType], read: [stepType]) { (success, error) in
+            if success {
+                print("cool")
+            } else {
+                print("shucks")
+            }
+            
+        }
     }
 
     

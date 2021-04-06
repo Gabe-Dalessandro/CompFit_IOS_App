@@ -12,5 +12,8 @@ target 'CompFit' do
   pod 'AWSCognito'
   pod 'AWSCore'
   pod 'AWSS3'
+
+  # Pods for Graphs and Charts
+  pod 'Charts'
   
 end

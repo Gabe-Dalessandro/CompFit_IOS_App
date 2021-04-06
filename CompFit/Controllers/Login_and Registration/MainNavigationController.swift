@@ -16,6 +16,6 @@ class MainNavigationController: UINavigationController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        navigationBar.barTintColor = Constants.deepOrange
+        navigationBar.barTintColor = Constants.Colors.brandPink
     }
 }

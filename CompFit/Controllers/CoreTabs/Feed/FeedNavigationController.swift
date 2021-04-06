@@ -28,7 +28,7 @@ class FeedNavigationController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationBar.barTintColor = Constants.deepOrange
+        self.navigationBar.barTintColor = .white
         view.backgroundColor = .white
         
     }
